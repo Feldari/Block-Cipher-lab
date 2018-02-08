@@ -67,7 +67,7 @@ def encode(key):
 
 def decode(key):
     '''
-    Block of code to encode your message
+    Block of code to decode your message
     key should be a randomly ordered list of numbers which contain numbers from 
     0 to len(key)-1
 
