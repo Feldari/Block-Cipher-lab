@@ -6,21 +6,26 @@ def key():
     Block of code to define the encryption key
     '''
     keyout = []
+    keyin = ''
 
-    # keyin = input('Enter your text key: ').upper()
+    userin = input('Enter your text key: ').upper()
     # swap comments between above and below for debugging and live
-    keyin = 'test string'.upper()
+    # userin = 'test string'.upper()
+
+    # colapse and filter user supplied key
+    for lett in userin:
+        if (ord(lett) < 65) | (ord(lett) > 90):
+            pass
+        else:
+            keyin += lett
 
     # sort the proposed key alphabetically
     sortin = sorted(keyin)
 
     # remove spaces and non-letters fom key
     for lett in sortin:
-        if (ord(lett) < 65) | (ord(lett) > 90):
-            pass
-        else:
-            keyout.append(keyin.index(lett))
-            keyin = keyin.replace(lett, '.',1)
+        keyout.append(keyin.index(lett))
+        keyin = keyin.replace(lett, '.',1)
 
     # return key as list
     return keyout
@@ -33,13 +38,13 @@ def encode(key):
 
     import random required to make this work
     '''
-    # original = input('enter text string to encode: ').upper()
+    original = input('enter text string to encode: ').upper()
     # swap comments on above and below line to finish or debug program
-    original = 'big long test string to encode as test string'.upper()
+    # original = 'big long test string to encode as test string'.upper()
 
+    '''
     nospace = []
-
-    # remove spaces and non-letters from encoding string
+    # remove spaces and non-letters from encoding string put string into list
     for lett in original:
         if (ord(lett) < 65) | (ord(lett) > 90):
             pass
@@ -50,27 +55,85 @@ def encode(key):
     # make plaintext block match key size
     while (len(nospace) % len(key)) != 0:
         nospace.append(chr(random.randint(65, 90)))
+    '''
 
-    ##################################################
-    # i have a list ready for encoding i just need to figure out how to
-    # break the list into the consituant blocks. maybe i can use list 
-    # slicing [0:len(nospace)] or some such nonsense
-    ##################################################
+    nospace = '' 
+    # remove spaces and non-letters from encoding string put string into list
+    for lett in original:
+        if (ord(lett) < 65) | (ord(lett) > 90):
+            pass
+        else:
+            nospace += lett
+    
+    # add random letters to end of plaintext to 
+    # make plaintext block match key size
+    while (len(nospace) % len(key)) != 0:
+        nospace += (chr(random.randint(65, 90)))
+    
+    # Encoding block take legnth of key worth of plaintext to process
+    # remove letters processed and repeat
     final = ''
-    for char in key:
-        x = int(char)
-        final = final + nospace[x]
+    while nospace != '':
+       for num in range(len(key)):
+            final += nospace[key[num]]
+       nospace = nospace[len(key):]
+    
+    return final
 
+def decode(key):
+    '''
+    Block of code to encode your message
+    key should be a randomly ordered list of numbers which contain numbers from 
+    0 to len(key)-1
 
-    print(nospace)
-    print(key)
-    print(final)
+    import random required to make this work
+    '''
+    original = input('enter text string to decode: ').upper()
+    # swap comments on above and below line to finish or debug program
+    # original = 'big long test string to encode as test string'.upper()
+    # original = encode(key)
 
+    '''
+    nospace = []
+    # remove spaces and non-letters from encoding string put string into list
+    for lett in original:
+        if (ord(lett) < 65) | (ord(lett) > 90):
+            pass
+        else:
+            nospace.append(lett)
 
+    # add random letters to end of plaintext to 
+    # make plaintext block match key size
+    while (len(nospace) % len(key)) != 0:
+        nospace.append(chr(random.randint(65, 90)))
+    '''
+
+    nospace = '' 
+    # remove spaces and non-letters from encoding string put string into list
+    for lett in original:
+        if (ord(lett) < 65) | (ord(lett) > 90):
+            pass
+        else:
+            nospace += lett
+    
+    # add random letters to end of plaintext to 
+    # make plaintext block match key size
+    while (len(nospace) % len(key)) != 0:
+        nospace += (chr(random.randint(65, 90)))
+    
+    # Encoding block take legnth of key worth of plaintext to process
+    # remove letters processed and repeat
+    final = ''
+    while nospace != '':
+       for num in range(len(key)):
+            final += nospace[key.index(num)]
+       nospace = nospace[10:]
+    
+    return final
 if __name__ == '__main__':
 
     import random
 
-    key = key()        
-    encode(key)
+    print(encode(key()))
+    print(decode(key()))
 
