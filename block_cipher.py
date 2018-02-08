@@ -127,7 +127,7 @@ def decode(key):
     while nospace != '':
        for num in range(len(key)):
             final += nospace[key.index(num)]
-       nospace = nospace[10:]
+       nospace = nospace[len(key):]
     
     return final
 if __name__ == '__main__':
